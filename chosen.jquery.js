@@ -109,7 +109,7 @@
     function AbstractChosen(form_field, options) {
       this.form_field = form_field;
       this.options = options != null ? options : {};
-      if (!AbstractChosen.browser_is_supported()) {
+      if (!AbstractChosen.browser_is_supported() && !this.options['is_ajax']) {
         return;
       }
       this.is_multiple = this.form_field.multiple;
@@ -530,7 +530,7 @@
       if ("Microsoft Internet Explorer" === window.navigator.appName) {
         return document.documentMode >= 8;
       }
-      if (/iP(od|hone)/i.test(window.navigator.userAgent) || /IEMobile/i.test(window.navigator.userAgent) || /Windows Phone/i.test(window.navigator.userAgent) || /BlackBerry/i.test(window.navigator.userAgent) || /BB10/i.test(window.navigator.userAgent) || /Android.*Mobile/i.test(window.navigator.userAgent)) {
+      if (/iP(od|hone)/i.test(window.navigator.userAgent) || /IEMobile/i.test(window.navigator.userAgent) || /Windows Phone/i.test(window.navigator.userAgent) || /BlackBerry/i.test(window.navigator.userAgent) || /BB10/i.test(window.navigator.userAgent) || /Android/i.test(window.navigator.userAgent)) {
         return false;
       }
       return true;
@@ -550,7 +550,7 @@
 
   $.fn.extend({
     chosen: function(options) {
-      if (!AbstractChosen.browser_is_supported()) {
+      if (!AbstractChosen.browser_is_supported() && !(options && options['is_ajax'])) {
         return this;
       }
       return this.each(function(input_field) {
